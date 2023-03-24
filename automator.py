@@ -6,15 +6,17 @@ def polyline():
     inpP = [
         eval(i) for i in input("Enter \'x y\' of initial point: ").split(" ")
     ]
+    x=inpP[0]
+    y=inpP[1]
     while True:
-        p = APoint(inpP[0], inpP[1])
+        p = APoint(x, y)
         r = int(input("Enter length of line: "))
         angle = int(input("Enter angle in degrees of lines:"))
         rad = math.radians(angle)
-        p2 = APoint(inpP[0] + r * math.cos(rad), inpP[1] + r * math.sin(rad))
-        l1 = acad.model.ADDLine(p, p2)
-        x = inpP[0] + r * math.cos(rad)
-        y = inpP[1] + r * math.sin(rad)
+        p2 = APoint(x + (r * math.cos(rad)), y + (r * math.sin(rad)))
+        l1 = acad.model.AddLine(p, p2)
+        x = x + (r * math.cos(rad))
+        y = y + (r * math.sin(rad))
         a = input("Type \'e\' to end or Type \'c\' to continue: ")
         if a == "e":
             break
