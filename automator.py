@@ -1,4 +1,3 @@
-
 from pyautocad import Autocad, APoint, aDouble
 import math
 acad = Autocad(create_if_not_exists=True)
@@ -44,14 +43,14 @@ def circle():
     r = int(input("Enter radius of circle: "))
     c1 = acad.model.AddCircle(APoint(c[0], c[1]), r)
 def arc():
-    c = input("Enter \'x y\' of point 1: ").split(" ")
-    c = [x for x in c if x not in [None, "", [], {}, (), "undefined"]]
+    # c = input("Enter \'x y\' of point 1: ").split(" ")
+    # c = [x for x in c if x not in [None, "", [], {}, (), "undefined"]]
+    c = [eval(i) for i in input("Enter 'x y' of center: ").split(" ")]
     r = int(input("Enter radius: "))
     s = math.radians(int(input("Enter start angle: ")))
     e = math.radians(int(input("Enter end angle: ")))
     a1 = acad.model.AddArc(APoint(c[0], c[1]), r, s, e)
-    if input("Reverse arc?(y/n)")=="y":
-        a1.ReverseOrientation()
+    
 while True:
     command = input("Enter ll, lr, c, a, p, e: ").strip().lower()
     if (command == "ll"):
