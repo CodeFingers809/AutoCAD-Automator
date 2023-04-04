@@ -1,7 +1,6 @@
 from pyautocad import Autocad, APoint, aDouble
 import math
 acad = Autocad(create_if_not_exists=True)
-pointsDB = []
 def polyline():
     inpP = [
         eval(i) for i in input("Enter \'x y\' of initial point: ").split(" ")
@@ -33,24 +32,25 @@ def lineR():
     inpPoint = [x for x in inpPoint if x not in [None, "", [], {}, (), "undefined"]]
     l = int(input("Enter length of line: "))
     a = math.radians(int(input("Enter angle of line in degrees: ")))
-    point = APoint(inpPoint[0], inpPoint[1])
-    x2 = inpPoint[0] + l * math.cos(a)
-    y2 = inpPoint[0] + l * math.sin(a)
+    point = APoint(int(inpPoint[0]), int(inpPoint[1]))
+    x2 = int(inpPoint[0]) + l * math.cos(a)
+    y2 = int(inpPoint[0]) + l * math.sin(a)
     l2 = acad.model.AddLine(point, APoint(x2, y2))
 def circle():
     c = input("Enter \'x y\' of point 1: ").split(" ")
     c = [x for x in c if x not in [None, "", [], {}, (), "undefined"]]
     r = int(input("Enter radius of circle: "))
-    c1 = acad.model.AddCircle(APoint(c[0], c[1]), r)
+    c1 = acad.model.AddCircle(APoint(int(c[0]), int(c[1])), r)
 def arc():
-    # c = input("Enter \'x y\' of point 1: ").split(" ")
-    # c = [x for x in c if x not in [None, "", [], {}, (), "undefined"]]
-    c = [eval(i) for i in input("Enter 'x y' of center: ").split(" ")]
+    c = input("Enter \'x y\' of point 1: ").split(" ")
+    c = [x for x in c if x not in [None, "", [], {}, (), "undefined"]]
     r = int(input("Enter radius: "))
     s = math.radians(int(input("Enter start angle: ")))
     e = math.radians(int(input("Enter end angle: ")))
-    a1 = acad.model.AddArc(APoint(c[0], c[1]), r, s, e)
-    
+    a1 = acad.model.AddArc(APoint(int(c[0]), int(c[1])), r, s, e)
+    if input("Reverse arc?(y/n)")=="y":
+        a1.erase()
+        a2 = acad.model.AddArc(APoint(int(c[0]), int(c[1])), r, e, s)
 while True:
     command = input("Enter ll, lr, c, a, p, e: ").strip().lower()
     if (command == "ll"):
